@@ -7,7 +7,7 @@ from datetime import datetime
 # from utilities.search_in_products import search_in_products
 # from utilities.choose_a_product import choose_a_product_id, choose_a_product_name
 # from utilities.new_order import insert_new_order
-# from utilities.add_product_to_order import add_product_to_order
+from utilities.add_product_to_order import add_product_to_order
 # from utilities.all_addresses_of_customer import all_addresses_of_customer
 # from utilities.check_customer_bought_product import check_customer_bought_product
 # from utilities.add_review import add_review
@@ -15,8 +15,9 @@ from datetime import datetime
 # from utilities.add_product import add_product
 # from utilities.add_new_product import add_new_product
 # from utilities.add_new_category import add_new_category
-from utilities.all_wanted_customers import all_wanted_customers
-from utilities.notify_wanted_customers import notify_wanted_customers
+# from utilities.all_wanted_customers import all_wanted_customers
+# from utilities.notify_wanted_customers import notify_wanted_customers
+from utilities.all_orders_of_customer import all_orders_of_customer
 
 app = Flask(__name__)
 
@@ -29,7 +30,8 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    notify_wanted_customers(1, all_wanted_customers(1))
+    # print(all_orders_of_customer(1))
+    # notify_wanted_customers(1, all_wanted_customers(1))
     # add_new_category('such_a_wow')
     # add_new_product('iphone', 20, 2, 1000, 2)
     # add_product(2, 1, 10, 0.6)
@@ -37,7 +39,7 @@ if __name__ == '__main__':
     # add_review(1, 'customer_id 1 said: hello world', 5)
     # print(check_customer_bought_product(1, 1))
     # print(all_addresses_of_customer(1))
-    # add_product_to_order(1, [{'id': 2, 'count': 10}])
+    add_product_to_order(1, [{'id': 2, 'count': 10, 'store_id': 2}])
     # print(insert_new_order('PREPARING', 1, datetime.now(), 1, datetime.now(), 0))
     # cursor.execute("INSERT INTO Admin (name, password) VALUES ('hello3', '111');")
     # if cursor.lastrowid:

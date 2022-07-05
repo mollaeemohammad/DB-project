@@ -3,10 +3,10 @@ from mysql.connector import Error
 
 
 def make_product_appropriate(order_id: int, product: dict) -> str:
-    return str((order_id, product['id'], product['count']))
+    return str((order_id, product['id'], product['count'], product['store_id']))
 
 
-def add_product_to_order(order_id: int, products: list) -> None:
+def add_product_to_order(order_id: int, products: list) -> int:
     """
     Shows the types of products that a customer ordered
     :param order_id: Integer (last inserted row) returned by new_order function
@@ -28,11 +28,13 @@ def add_product_to_order(order_id: int, products: list) -> None:
         converted_products = ' ,'.join(converted_products)
 
         cursor = conn.cursor()
-        cursor.execute(f'INSERT INTO ordered_products (order_id, product_id, count_product) \
+        cursor.execute(f'INSERT INTO ordered_products (order_id, product_id, count_product, store_id) \
                         VALUES {converted_products}')
         conn.commit()
+        return cursor.lastrowid
     except Error as error:
         print(error)
+        return -1
 
 # INSERT INTO ordered_products (order_id, product_id, count_product)
 # VALUES (the above order_id, product_id 1, n),
