@@ -1,10 +1,15 @@
 from connection import conn
+from mysql.connector import Error
 
 
 def all_categories() -> list:
-    cursor = conn.cursor()
-    cursor.execute(
-        f'SELECT * \
-        FROM Category;'
-    )
-    return cursor.fetchall()
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            f'SELECT * \
+            FROM Category;'
+        )
+        return cursor.fetchall()
+    except Error as error:
+        print(error)
+        return ["Something went wrong"]

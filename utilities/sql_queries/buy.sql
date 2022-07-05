@@ -7,8 +7,8 @@ VALUES ('MOLLAEE', 'MOHAMMAD', 123, 'ASD');
 INSERT INTO `order` (status, customer_id, estimate_date, total_cost, discount_percent)
 VALUES ('PREPARING', 1, '9999-01-01', 0, 0);
 
-# INSERT INTO ordered_products (order_id, product_id)
-# VALUES (the above order_id, product_id 1),
+# INSERT INTO ordered_products (order_id, product_id, count_product)
+# VALUES (the above order_id, product_id 1, n),
 #        (the above order_id, product_id 2),
 #        (the above order_id, product_id 3),
 #        (the above order_id, product_id 4);
