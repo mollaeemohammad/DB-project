@@ -76,7 +76,7 @@ CREATE TABLE Product
     picture     VARCHAR(500),
     weight      DECIMAL(5, 1),
     color       VARCHAR(100),
-    dimensions  VARCHAR(100), # '2*2*3'
+    dimensions  VARCHAR(100), # '2*2*3',
     description TEXT
 );
 
