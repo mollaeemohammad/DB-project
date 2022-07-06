@@ -81,7 +81,7 @@ CREATE TABLE Product
 );
 
 
-# CREATE TABLE Notifications ###################
+# CREATE TABLE Fs ###################
 # (
 #     customer_id   INT REFERENCES Customer (id) ON DELETE CASCADE,
 #     product_id    INT REFERENCES Product (id) ON DELETE CASCADE,
@@ -196,8 +196,6 @@ CREATE TABLE `Order` ######################
 #     ticket_date  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 # );
 
-
-DROP TABLE PROBLEM;
 
 
 CREATE TABLE PROBLEM #####################
