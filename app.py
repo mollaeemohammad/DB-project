@@ -6,6 +6,8 @@ from api.login import LoginAdmin, LoginCustomer, Logout
 from api.all_categories import AllCategories
 from api.choose_category import AllProductsOfCategory
 from api.search_in_products import SearchInProducts
+from api.all_stores import AllStores
+from api.choose_product import ChooseProduct
 import logging
 
 
@@ -44,6 +46,8 @@ def init_routes(api: Api) -> None:
     api.add_resource(AllCategories, '/api/all_categories')
     api.add_resource(AllProductsOfCategory, '/api/all_products_of_category')
     api.add_resource(SearchInProducts, '/api/search_in_products')
+    api.add_resource(AllStores, '/api/all_stores')
+    api.add_resource(ChooseProduct, '/api/choose_product')
 
 
 def create_app() -> Flask:

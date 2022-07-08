@@ -21,7 +21,8 @@ def admin_status_update(order_id: int, status: str) -> None:
         if status == 'DELIVERED' or status == 'PREPARING':
             cursor = conn.cursor()
             cursor.execute(f'UPDATE `order` \
-                            SET status = "{status}" \
+                            SET status = "{status}"'
+                           f' \
                             WHERE id = {order_id};')
             conn.commit()
 

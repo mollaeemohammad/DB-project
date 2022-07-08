@@ -6,7 +6,7 @@ def all_stores() -> list:
     try:
         cursor = conn.cursor()
         cursor.execute(
-            f'SELECT * \
+            f'SELECT id, `name`, location \
             FROM Store;'
         )
         return cursor.fetchall()

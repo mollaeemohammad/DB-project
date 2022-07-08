@@ -4,7 +4,6 @@ from utilities.login import login_admin, login_store, login_customer
 from utilities.errors import *
 
 
-
 def successfully_found_user(mysql_response: list) -> bool:
     if len(mysql_response) != 0 and mysql_response != ['Something went wrong']:
         return True
@@ -13,24 +12,28 @@ def successfully_found_user(mysql_response: list) -> bool:
 
 class LoginAdmin(Resource):
     def post(self):
-        # Create a parser to parse arguments provided in the json
-        parser = reqparse.RequestParser()
-        parser.add_argument('name', type=str, required=True)
-        parser.add_argument('password', type=str, required=True)
+        try:
+            # Create a parser to parse arguments provided in the json
+            parser = reqparse.RequestParser()
+            parser.add_argument('name', type=str, required=True)
+            parser.add_argument('password', type=str, required=True)
 
-        args = parser.parse_args()
+            args = parser.parse_args()
 
-        login_admin_info = login_admin(args['name'], args['password'])
+            login_admin_info = login_admin(args['name'], args['password'])
 
-        if successfully_found_user(login_admin_info):
-            session['logged_in'] = True
-            session['role'] = 'admin'
-            session['username'] = login_admin_info[0][1]
-            session['id'] = login_admin_info[0][0]
-            # g.current_user = user
-            return jsonify({
-                "message": "Successful"
-            })
+            if successfully_found_user(login_admin_info):
+                session['logged_in'] = True
+                session['role'] = 'admin'
+                session['username'] = login_admin_info[0][1]
+                session['id'] = login_admin_info[0][0]
+                # g.current_user = user
+                return jsonify({
+                    "message": "Successful"
+                })
+
+        except UnauthorizedError:
+            return jsonify(errors['UnauthorizedError'])
 
         return jsonify({
             "message": "Unsuccessful"
@@ -57,6 +60,8 @@ class LoginCustomer(Resource):
                 return jsonify({
                     "message": "Successful"
                 })
+            else:
+                raise UnauthorizedError
         except UnauthorizedError:
             return jsonify(errors['UnauthorizedError'])
 
@@ -81,6 +86,8 @@ class LoginStore(Resource):
                 return jsonify({
                     "message": "Successful"
                 })
+            else:
+                raise UnauthorizedError
 
         except UnauthorizedError:
             return jsonify(errors['UnauthorizedError'])
