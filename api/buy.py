@@ -30,6 +30,11 @@ def determine_products_for_adding_to_order(cart: list) -> list:
     return result
 
 
+def add_problem_for_each_product(order_id, products: list) -> None:
+    for product in products:
+        add_problem(order_id, product['store_id'])
+
+
 class Buy(Resource):
     """{
         customer_id: int,
@@ -65,8 +70,7 @@ class Buy(Resource):
             # Making cart argument appropriate for add_product_to_order function
             products = determine_products_for_adding_to_order(args['cart'])
             add_product_to_order(order_id, products)
-            add_problem(order_id, args["store_id"])
-
+            add_problem_for_each_product(order_id, products)
 
             return jsonify(
                 {
