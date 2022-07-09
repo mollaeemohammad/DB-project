@@ -13,6 +13,8 @@ from api.all_addresses_of_customer import AllAddressesOfCustomer
 from api.update_product_count import UpdateProductCount
 from api.add_review import AddReview
 from api.add_new_product import AddNewProduct
+from api.add_problem import AddProblem
+from api.all_orders_of_customer import AllOrdersOfCustomer
 import logging
 
 
@@ -58,6 +60,8 @@ def init_routes(api: Api) -> None:
     api.add_resource(UpdateProductCount, '/api/update_product_count')
     api.add_resource(AddReview, '/api/add_review')
     api.add_resource(AddNewProduct, '/api/add_new_product')
+    api.add_resource(AddProblem, '/api/add_problem')
+    api.add_resource(AllOrdersOfCustomer, '/api/all_orders_of_customer')
 
 
 def create_app() -> Flask:
