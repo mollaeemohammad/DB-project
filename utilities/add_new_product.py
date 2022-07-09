@@ -8,6 +8,11 @@ def add_new_product(name, count, store_id, price, category_id, picture=None, wei
     try:
         cursor = conn.cursor()
 
+        if weight is None:
+            weight = 0.0
+        if discount_percentage is None:
+            discount_percentage = 0.0
+
         cursor.execute(f'INSERT INTO product (rating, price, `name`, picture, weight, color, dimensions, description) \
                         VALUES (0, {price}, "{name}", "{picture}", {weight}, "{color}", "{dimensions}", "{description}");')
 

@@ -1,7 +1,8 @@
 from flask import jsonify, g, current_app, session
 from flask_restful import Resource, reqparse
 from utilities.update_product_count import update_product_count
-from utilities.errors import *
+from utilities.all_wanted_customers import all_wanted_customers
+from utilities.notify_wanted_customers import notify_wanted_customers
 from access_control import is_logged_in
 from utilities.errors import *
 
@@ -35,6 +36,12 @@ class UpdateProductCount(Resource):
                                  count=args['count'],
                                  discount_percentage=args['discount_percentage']
                                  )
+
+            wanted_customers = all_wanted_customers(args['product_id'])
+            print(wanted_customers)
+
+            notify_wanted_customers(args['product_id'], wanted_customers)
+
             return jsonify({
                 "message": "Successfully updated."
             })

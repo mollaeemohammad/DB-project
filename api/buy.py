@@ -3,7 +3,7 @@ from flask_restful import Resource, reqparse
 from utilities.new_order import insert_new_order
 from utilities.add_product_to_order import add_product_to_order
 from utilities.add_problem import add_problem
-from access_control import is_logged_in
+from access_control import is_logged_in, has_role
 from utilities.errors import *
 from datetime import datetime, timedelta
 from utilities.discount_percentage_code import discount_percentage
