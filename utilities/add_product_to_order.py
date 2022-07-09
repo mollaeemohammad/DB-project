@@ -14,6 +14,7 @@ def add_product_to_order(order_id: int, products: list) -> int:
         [{
             id: Integer,
             count: Integer
+            store_id: Integer
         }, ...
         ]
     :return: None
