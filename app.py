@@ -16,7 +16,7 @@ from api.add_new_product import AddNewProduct
 from api.add_problem import AddProblem
 from api.all_orders_of_customer import AllOrdersOfCustomer
 import logging
-
+from flask_cors import CORS
 
 # class Role(RoleMixin):
 #     pass
@@ -69,7 +69,7 @@ def create_app() -> Flask:
     :return: The Flask object which will run and listen to incoming requests
     """
     app = Flask(__name__)
-
+    CORS(app)
     app.secret_key = 'asdsdfsdfs13sdf_df%&'
 
     logger = logging.getLogger(__name__)
