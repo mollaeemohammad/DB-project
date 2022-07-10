@@ -11,9 +11,7 @@ class AllCategories(Resource):
         :return: [[id, name]]
         """
         try:
-            if not is_logged_in():
-                raise NotExistsError
-
+            # all users should have access to categories
             return all_categories()
 
         except NotExistsError:
