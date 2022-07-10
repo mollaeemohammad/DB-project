@@ -3,12 +3,12 @@ from mysql.connector import Error
 from datetime import date
 
 
-def insert_new_order(status: str, customer_id: int, estimate_date: date, total_cost, order_date,
+def insert_new_order(status: str, customer_id: int, estimate_date: date, total_cost, order_date: date,
                      discount_percent) -> int:
     try:
         cursor = conn.cursor()
         cursor.execute(f'INSERT INTO `order` (status, customer_id, estimate_date, total_cost,order_date, discount_percent) \
-                        VALUES ("{status}", {customer_id}, "{estimate_date.strftime("%Y-%m-%d")}", {total_cost},"{order_date.strftime("%Y-%m-%d")}", {discount_percent});')
+                        VALUES ("{status}", {customer_id}, "{estimate_date}", {total_cost},"{order_date}", {discount_percent});')
         conn.commit()
         return cursor.lastrowid
     except Error as error:
