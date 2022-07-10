@@ -34,6 +34,7 @@ class AddNewProduct(Resource):
             parser.add_argument('category_id', type=int, required=True)
             parser.add_argument('picture', type=str)
             parser.add_argument('weight', type=float)
+            parser.add_argument('color', type=str)
             parser.add_argument('dimensions', type=str)
             parser.add_argument('description', type=str)
             parser.add_argument('discount_percentage', type=float)
@@ -47,6 +48,7 @@ class AddNewProduct(Resource):
                             category_id=args['category_id'],
                             picture=args['picture'],
                             weight=args['weight'],
+                            color=args['color'],
                             dimensions=args['dimensions'],
                             description=args['description'],
                             discount_percentage=args['discount_percentage'])
