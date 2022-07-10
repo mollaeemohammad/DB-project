@@ -25,6 +25,7 @@ from api.add_new_customer import AddNewCustomer
 from api.add_new_store import AddNewStore
 from api.add_new_address_to_customer import AddNewAddressToCustomer
 from api.suggestion import Suggestion
+from api.update_status_order_customer import UpdateStatusOrderCustomer
 import logging
 from flask_cors import CORS
 
@@ -61,6 +62,7 @@ def init_routes(api: Api) -> None:
     api.add_resource(AddNewStore, '/api/add_new_store')
     api.add_resource(AddNewAddressToCustomer, '/api/add_new_address_to_customer')
     api.add_resource(Suggestion, '/api/suggestion')
+    api.add_resource(UpdateStatusOrderCustomer, '/api/update_status_order_customer')
 
 
 def create_app() -> Flask:
