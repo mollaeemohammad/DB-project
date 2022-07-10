@@ -20,6 +20,10 @@ from api.choose_order import ChooseOrder
 from api.up_down_vote import UpVote, DownVote
 from api.update_discount_product_store import UpdateDiscountProductStore
 from api.all_deliveries import AllDeliveries
+from api.add_new_category import AddNewCategory
+from api.add_new_customer import AddNewCustomer
+from api.add_new_store import AddNewStore
+from api.add_new_address_to_customer import AddNewAddressToCustomer
 import logging
 
 
@@ -73,6 +77,10 @@ def init_routes(api: Api) -> None:
     api.add_resource(DownVote, '/api/down_vote')
     api.add_resource(UpdateDiscountProductStore, '/api/update_discount_product_store')
     api.add_resource(AllDeliveries, '/api/all_deliveries')
+    api.add_resource(AddNewCategory, '/api/add_new_category')
+    api.add_resource(AddNewCustomer, '/api/add_new_customer')
+    api.add_resource(AddNewStore, '/api/add_new_store')
+    api.add_resource(AddNewAddressToCustomer, '/api/add_new_address_to_customer')
 
 
 def create_app() -> Flask:
