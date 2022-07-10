@@ -24,31 +24,10 @@ from api.add_new_category import AddNewCategory
 from api.add_new_customer import AddNewCustomer
 from api.add_new_store import AddNewStore
 from api.add_new_address_to_customer import AddNewAddressToCustomer
+from api.suggestion import Suggestion
 import logging
 from flask_cors import CORS
 
-# class Role(RoleMixin):
-#     pass
-#
-#
-# class User(UserMixin):
-#     pass
-#
-# def get_current_user():
-#     with current_app.request_context():
-#         return g.current_user
-#
-#
-# rbac = RBAC()
-# rbac.set_role_model(Role)
-# rbac.set_user_model(User)
-# rbac.set_user_loader(get_current_user)
-#
-# user = User()
-# customer = Role('customer')
-# store = Role('store')
-# admin = Role('admin')
-# anonymous = Role('anonymous')
 
 
 def init_routes(api: Api) -> None:
@@ -81,6 +60,7 @@ def init_routes(api: Api) -> None:
     api.add_resource(AddNewCustomer, '/api/add_new_customer')
     api.add_resource(AddNewStore, '/api/add_new_store')
     api.add_resource(AddNewAddressToCustomer, '/api/add_new_address_to_customer')
+    api.add_resource(Suggestion, '/api/suggestion')
 
 
 def create_app() -> Flask:
