@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 def store_has_a_product(store_id: int, product_id: int) -> int:
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT * \
                         FROM Store AS s \
                         INNER JOIN Supplies AS su ON s.id = su.store_id \

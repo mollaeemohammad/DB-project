@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 def add_new_address_to_customer(customer_id: int, complete_address: str) -> int:
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'INSERT INTO Addresses (customer_id, complete_address) \
                         VALUES ({customer_id}, "{complete_address}")')
         conn.commit()

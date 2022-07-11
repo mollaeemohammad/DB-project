@@ -63,20 +63,6 @@ const Sidebar:FC<Props> = ({expanded, setExpanded}) => {
               {categories.map((category: any, index: number) => <Dropdown.Item key={category[0]} eventKey={`4-5-${index}`} onClick={()=>{navigate(`category/${category[1]}`)}}>{category[1]}</Dropdown.Item>)}
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown
-            placement="rightStart"
-            eventKey="4"
-            title="Settings"
-            icon={<Gear/>}
-          >
-            <Dropdown.Item eventKey="4-1">Applications</Dropdown.Item>
-            <Dropdown.Item eventKey="4-2">Channels</Dropdown.Item>
-            <Dropdown.Item eventKey="4-3">Versions</Dropdown.Item>
-            <Dropdown.Menu eventKey="4-5" title="Custom Action">
-              <Dropdown.Item eventKey="4-5-1">Action Name</Dropdown.Item>
-              <Dropdown.Item eventKey="4-5-2">Action Params</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
         </Nav>
       </Sidenav.Body>
       <Sidenav.Toggle expanded={expanded} onToggle={expanded => setExpanded(expanded)} />

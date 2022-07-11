@@ -28,7 +28,7 @@ def add_product_to_order(order_id: int, products: list) -> int:
         # New concatenate and add ' ,' to them
         converted_products = ' ,'.join(converted_products)
 
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'INSERT INTO ordered_products (order_id, product_id, count_product, store_id) \
                         VALUES {converted_products}')
         conn.commit()

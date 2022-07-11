@@ -11,7 +11,7 @@ def update_discount(store_id: int, product_id: int, discount_percentage: float) 
     :return:
     """
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'UPDATE supplies \
                         SET discount_percentage = {discount_percentage} \
                         WHERE store_id = {store_id} AND product_id =  {product_id};')

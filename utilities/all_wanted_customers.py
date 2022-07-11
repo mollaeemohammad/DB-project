@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 def all_wanted_customers(product_id: int) -> list:
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT w.customer_id \
                         FROM Product AS p \
                         INNER JOIN Wanted AS w ON p.id = w.product_id;')

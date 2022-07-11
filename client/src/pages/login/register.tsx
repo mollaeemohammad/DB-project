@@ -52,7 +52,7 @@ const Register = ({Role}:Props) => {
   
   return (
     <Content>
-      <FlexboxGrid justify="center" align="middle" style={{ height: '100vh', flex: '1' }}>
+      <FlexboxGrid justify="center" align="middle" style={{ height: '90vh', flex: '1' }}>
         <FlexboxGrid.Item as={Col} colspan={23} sm={20} md={10} lg={8}>
           <Panel header={<h3 className="text-center">Register { Role }</h3>} bordered>
             <Form model={userRegisterFormModel} ref={userLoginFormRef} onChange={setUserLoginFormValue} onCheck={setUserLoginFormError} formError={userLoginFormError} onSubmit={handleUserLoginSubmit} style={{ margin: "auto", width: "100%", maxWidth: "400px" }}>

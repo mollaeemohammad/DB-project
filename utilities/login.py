@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 def login_customer(username: str, password: str) -> list:
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(
             f'SELECT * \
              FROM Customer \
@@ -18,7 +18,7 @@ def login_customer(username: str, password: str) -> list:
 
 def login_admin(name: str, password: str):
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(
             f'SELECT * \
             FROM Admin \
@@ -33,7 +33,7 @@ def login_admin(name: str, password: str):
 
 def login_store(name: str, password: str):
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(
             f'SELECT * \
                 FROM Store \

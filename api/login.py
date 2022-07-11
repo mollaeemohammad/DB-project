@@ -58,7 +58,9 @@ class LoginCustomer(Resource):
                 session['username'] = login_admin_info[0][3]
                 session['id'] = login_admin_info[0][0]
                 return jsonify({
-                    "message": "Successful"
+                    "message": "Successful",
+                    "id":login_admin_info[0][0],
+                    "username":login_admin_info[0][3]
                 })
             else:
                 raise UnauthorizedError
@@ -84,7 +86,9 @@ class LoginStore(Resource):
                 session['username'] = login_admin_info[0][1]
                 session['id'] = login_admin_info[0][0]
                 return jsonify({
-                    "message": "Successful"
+                    "message": "Successful",
+                    "id":login_admin_info[0][0],
+                    "username":login_admin_info[0][1]
                 })
             else:
                 raise UnauthorizedError

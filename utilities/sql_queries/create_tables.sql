@@ -242,10 +242,14 @@ CREATE TABLE IF NOT EXISTS ORDERED_PRODUCTS ###################
 ( -- ORDER & PRODUCT
     order_id   INT NOT NULL,
     product_id INT NOT NULL,
+    store_id INT NOT NULL,
     FOREIGN KEY (order_id) REFERENCES `Order` (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     FOREIGN KEY (product_id) REFERENCES Product (id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (store_id) REFERENCES Store (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

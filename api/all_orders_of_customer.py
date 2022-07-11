@@ -16,7 +16,7 @@ class AllOrdersOfCustomer(Resource):
         customer_id: int
     }"""
 
-    def get(self):
+    def post(self):
         """
         :return:[
         {

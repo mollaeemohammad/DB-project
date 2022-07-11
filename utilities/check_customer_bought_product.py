@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 def check_customer_bought_product(customer_id: int, product_id: int) -> bool:
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT * \
                         FROM customer AS c \
                         INNER JOIN `order` AS o ON c.id = o.customer_id \

@@ -10,7 +10,7 @@ def find_store_of_a_product_in_order(product_id: int, order_id: int) -> list:
     :return: [(store_id,)]
     """
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(
             f'SELECT store_id FROM ordered_products WHERE product_id = {product_id} AND order_id = {order_id};'
         )

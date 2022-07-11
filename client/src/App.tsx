@@ -35,8 +35,8 @@ const App: FC = () => {
         </ModalProvider>
       </UserProvider>
       <ToastContainer
-        theme="colored"
-        position="top-right"
+        theme="dark"
+        position="bottom-right"
         autoClose={10000}
         hideProgressBar={false}
         newestOnTop={false}

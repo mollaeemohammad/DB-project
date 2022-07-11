@@ -30,6 +30,8 @@ const Login = ({Role}:Props) => {
         console.log(data);
         showToast("Logged in successfully", "success");
         Cookies.set("DB_ROLE", Role);
+        Cookies.set("DB_USERNAME", data.username);
+        Cookies.set("DB_ID", data.id);
         navigate("/");
       }
     } catch (e) {
@@ -52,7 +54,7 @@ const Login = ({Role}:Props) => {
   
   return (
     <Content>
-      <FlexboxGrid justify="center" align="middle" style={{ height: '100vh', flex: '1' }}>
+      <FlexboxGrid justify="center" align="middle" style={{ height: '90vh', flex: '1' }}>
         <FlexboxGrid.Item as={Col} colspan={23} sm={20} md={10} lg={8}>
           <Panel header={<h3 className="text-center">Login { Role }</h3>} bordered>
             <Form model={userLoginFormModel} ref={userLoginFormRef} onChange={setUserLoginFormValue} onCheck={setUserLoginFormError} formError={userLoginFormError} onSubmit={handleUserLoginSubmit} style={{ margin: "auto", width: "100%", maxWidth: "400px" }}>

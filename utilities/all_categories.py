@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 def all_categories() -> list:
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(
             f'SELECT * \
             FROM Category;'

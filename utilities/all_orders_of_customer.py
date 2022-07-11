@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 def all_orders_of_customer(customer_id: int) -> list:
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT * \
                         FROM `order` \
                         WHERE customer_id = {customer_id};')

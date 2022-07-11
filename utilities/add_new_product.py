@@ -6,7 +6,7 @@ def add_new_product(name, count, store_id, price, category_id, picture=None, wei
                     description=None,
                     discount_percentage=0.0) -> None:
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
 
         if weight is None:
             weight = 0.0

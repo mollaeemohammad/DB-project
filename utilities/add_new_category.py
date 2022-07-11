@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 def add_new_category(name: str) -> int:
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'INSERT INTO Category (name) VALUES ("{name}")')
         conn.commit()
         return cursor.lastrowid

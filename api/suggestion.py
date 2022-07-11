@@ -14,7 +14,7 @@ class Suggestion(Resource):
     {
     """
 
-    def get(self):
+    def post(self):
         """
             :return: [[id, rating, price, name, picture], ...]
         """

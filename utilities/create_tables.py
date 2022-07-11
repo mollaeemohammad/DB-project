@@ -4,7 +4,7 @@ from mysql.connector import Error
 
 def create_tables():
     try:
-        cursor = conn.cursor()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'CREATE TABLE IF NOT EXISTS Customer \
                         ( \
                             id         INT PRIMARY KEY AUTO_INCREMENT, \

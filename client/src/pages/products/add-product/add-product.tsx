@@ -9,32 +9,36 @@ import { COLORS } from "util/storage";
 import { addProduct } from "core/api";
 import { addProductModel } from "models";
 import { fetchCategories } from "pages/category/api/categories";
+import Cookies from "js-cookie";
+import { showToast } from "util/toast";
+import { useNavigate } from "react-router-dom";
 
 const { StringType, NumberType } = Schema.Types;
 
 const model = Schema.Model({
   name: StringType().isRequired(),
-  price: NumberType().isRequired(),
+  price: StringType().isRequired(),
   count: NumberType().isRequired(),
   store_id: NumberType().isRequired(),
   category_id: NumberType().isRequired(),
   picture: StringType(),
-  weight: NumberType(),
+  weight: StringType(),
   color: StringType().isRequired(),
   dimensions: StringType(),
   description: StringType(),
   discount_percentage: StringType().isRequired(),
 });
 
-const AddProduct = ({defaultValue}:any) => {
+const AddProduct = () => {
+  const navigate = useNavigate();
   const formRef = useRef<any>();
   const [formError, setFormError] = useState<any>();
-  const [formValue, setFormValue] = useState<any>({});
+  const [formValue, setFormValue] = useState<any>({store_id:Cookies.get("DB_ID")});
   const [addAddressesButtonLoading, setAddAddressesButtonLoading] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  const addProductApi = async (query: addProductModel) => { 
-    try{
+  const addProductApi = async (query: addProductModel) => {
+    try {
       const { status, data } = await addProduct(query);
       if (status === 200) {
         console.log(data);
@@ -43,7 +47,7 @@ const AddProduct = ({defaultValue}:any) => {
       console.log(e);
     }
     return [];
-  }
+  };
   
   const [uploadedFilesUrl, setUploadedFilesUrl] = useState<any>();
   const handleSubmit = useCallback(async () => {
@@ -53,10 +57,17 @@ const AddProduct = ({defaultValue}:any) => {
     }
     
     console.log(formValue, 'Form Value');
-    const randomImage = await fetch('https://picsum.photos/200/300?random=1');
-    console.log(randomImage);
+    let randomImage = { url: '' };
+    try {
+      randomImage = await fetch('https://picsum.photos/200/300?random=1');
+      console.log(randomImage);
+    } catch (e) {
+      console.log(e);
+    }
 
-    addProductApi({...formValue, picture:randomImage.url});
+    addProductApi({ ...formValue, picture: randomImage.url });
+    showToast("Product Added Successfully", "success");
+    // navigate("/products");
   },[uploadedFilesUrl, formValue]);
   
   const initCategories = async() => {
@@ -83,15 +94,14 @@ const AddProduct = ({defaultValue}:any) => {
           </div>
 
           <div className="col-12">
-            <Form ref={formRef} onChange={setFormValue} onCheck={setFormError} formError={formError} model={model} formDefaultValue={defaultValue} style={{ margin: "auto", width: "90%"}}>
+            <Form ref={formRef} onChange={setFormValue} onCheck={setFormError} formError={formError} model={model} formDefaultValue={formValue} style={{ margin: "auto", width: "90%"}}>
               <div className="show-grid mb-4">
                 <FlexboxGrid>
                   <FlexboxGrid.Item colspan={12} style={{ paddingRight: 10 }}>
-                    <TextField type="number" name="store_id" label="Store ID" disable={isAdmin()?false:true} />
+                    <TextField type="number" name="store_id" label="Store ID" disable={isAdmin()?false:true} disabled />
                     <TextField name="name" label="Name" />
-                    <TextField type="number" name="price" label="Price" />
+                    <TextField name="price" label="Price" />
                     <TextAreaField  name="description" label="Description" />
-                    <TextField name="weight" label="Weight" />
                     <Field accepter={MaskedInput}
                       showMask={true}
                       keepCharPositions={true}
@@ -110,6 +120,8 @@ const AddProduct = ({defaultValue}:any) => {
                         );
                       }} />
                     <TextField name="discount_percentage" label="Discount Percentage" />
+                    <TextField name="weight" label="Weight" />
+
                     {/* <Uploader onChange={(fileList) => handleFileUpload(fileList, "C5")} fileListVisible={false} disableMultipart={true} multiple={false} action=""><span>{uploadedFilesUrl?.C5?.Name ?? "آپلود"}</span></Uploader> */}
                     {/* <TextField name="picture" label="Picture" disabled /> */}
                   </FlexboxGrid.Item>

@@ -8,6 +8,7 @@ from api.choose_category import AllProductsOfCategory
 from api.search_in_products import SearchInProducts
 from api.all_stores import AllStores
 from api.choose_product import ChooseProduct
+from api.choose_product_review import ChooseProductReview
 from api.buy import Buy
 from api.all_addresses_of_customer import AllAddressesOfCustomer
 from api.update_product_count import UpdateProductCount
@@ -45,6 +46,7 @@ def init_routes(api: Api) -> None:
     api.add_resource(SearchInProducts, '/api/search_in_products')
     api.add_resource(AllStores, '/api/all_stores')
     api.add_resource(ChooseProduct, '/api/choose_product')
+    api.add_resource(ChooseProductReview, '/api/choose_product_review')
     api.add_resource(Buy, '/api/buy')
     api.add_resource(AllAddressesOfCustomer, '/api/all_addresses_of_customer')
     api.add_resource(UpdateProductCount, '/api/update_product_count')
