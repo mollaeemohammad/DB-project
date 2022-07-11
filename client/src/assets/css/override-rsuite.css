@@ -1,0 +1,14 @@
+.rs-modal-header .rs-modal-header-close {
+  right: unset;
+  left: 15px;
+  top: 12px;
+}
+
+/* make input 100% */
+.rs-form-vertical .rs-form-group .rs-form-control-wrapper {
+  display: block;
+}
+
+.rs-modal-header {
+  padding-right: 0;
+}
