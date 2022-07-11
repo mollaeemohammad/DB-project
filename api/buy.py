@@ -12,7 +12,7 @@ from utilities.discount_percentage_code import discount_percentage
 def calculate_total_cost(cart: list) -> float:
     result = float()
     for product in cart:
-        result += product[2] * product[3] * product[4]  # count * discount_percentage * price
+        result += product[2] * (1-product[3]) * product[4]  # count * discount_percentage * price
 
     return result
 
