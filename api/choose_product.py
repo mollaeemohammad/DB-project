@@ -15,7 +15,7 @@ class ChooseProduct(Resource):
     {
     """
 
-    def get(self):
+    def post(self):
         """
             :return: [[id, rating, price, name, picture]]
         """
@@ -29,7 +29,6 @@ class ChooseProduct(Resource):
             parser.add_argument('id', type=int)
 
             args = parser.parse_args()
-
             if not args.get('name') is None:
                 product_info = choose_a_product_name(args['name'])
                 product_info = handle_date_type(product_info)
@@ -37,6 +36,7 @@ class ChooseProduct(Resource):
 
             if not args.get('id') is None:
                 product_info = choose_a_product_id(args['id'])
+                print("aaa",product_info)
                 product_info = handle_date_type(product_info)
                 return jsonify(product_info)
 

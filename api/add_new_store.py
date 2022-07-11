@@ -16,9 +16,6 @@ class AddNewStore(Resource):
 
     def post(self):
         try:
-            if not is_logged_in():
-                raise NotExistsError
-
             parser = reqparse.RequestParser()
 
             parser.add_argument('name', type=str, required=True)

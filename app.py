@@ -2,7 +2,7 @@ from flask import Flask, g, current_app
 from flask_restful import Api
 # from flask_rbac import RBAC, RoleMixin, UserMixin
 from utilities.errors import errors
-from api.login import LoginAdmin, LoginCustomer, Logout
+from api.login import LoginAdmin, LoginCustomer, LoginStore, Logout
 from api.all_categories import AllCategories
 from api.choose_category import AllProductsOfCategory
 from api.search_in_products import SearchInProducts
@@ -38,6 +38,7 @@ def init_routes(api: Api) -> None:
     """
     api.add_resource(LoginAdmin, '/api/login_admin')
     api.add_resource(LoginCustomer, '/api/login_customer')
+    api.add_resource(LoginStore, '/api/login_store')
     api.add_resource(Logout, '/api/logout')
     api.add_resource(AllCategories, '/api/all_categories')
     api.add_resource(AllProductsOfCategory, '/api/all_products_of_category')

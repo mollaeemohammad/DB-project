@@ -12,9 +12,9 @@ class SearchInProducts(Resource):
         name: str
     }
     """
-    def get(self):
+    def post(self):
         """
-        :return: [[id, rating, price, `name`]]
+        :return: [[id, rating, price, `name`, `picture`, `description`, `color` ]]
         """
         try:
             parser = reqparse.RequestParser()

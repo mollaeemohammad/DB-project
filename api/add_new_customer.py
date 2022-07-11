@@ -15,9 +15,6 @@ class AddNewCustomer(Resource):
 
     def post(self):
         try:
-            if not is_logged_in():
-                raise NotExistsError
-
             parser = reqparse.RequestParser()
 
             parser.add_argument('first_name', type=str, required=True)

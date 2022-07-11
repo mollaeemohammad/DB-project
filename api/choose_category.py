@@ -13,7 +13,7 @@ class AllProductsOfCategory(Resource):
     {
     """
 
-    def get(self):
+    def post(self):
         """
             :return: [[id, rating, price, name, picture]]
         """
