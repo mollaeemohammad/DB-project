@@ -3,33 +3,61 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'rsuite';
-import { fetchOrders } from './api/orders';
+import { fetchDeliveries, fetchOrders } from './api/orders';
 import { OrderCard } from './order-card';
 import { FlexboxGrid } from 'rsuite';
 import { Divider } from 'rsuite';
+import { isStore } from 'util/helper';
 export const Orders = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
+  const [Store, setStore] = useState(isStore());
   const initOrders = async () => {
-    const data = await fetchOrders({ customer_id: Cookies.get("DB_ID") });
-    console.log(data, 'data');
-    const newData = data.map((item: any) => {
-      return (
-        {
-          id: item[0],
-          status: item[1],
-          customer_id: item[2],
-          receipt_date: item[3],
-          estimate_date: item[4],
-          total_cost: item[5],
-          order_date: item[6],
-          discount_percent: item[7],
-          delivery_cost: item[8],
-        }
-      );
-    });
-    console.log(newData)
-    setOrders(newData);
+    let data:any;
+    
+    if (Store) {
+      data = await fetchDeliveries({ store_id: Cookies.get("DB_ID") });
+      const newData = data.map((item: any) => {
+        return (
+          {
+            id: item[0],
+            status: item[1],
+            customer_id: item[2],
+            receipt_date: item[3],
+            estimate_date: item[4],
+            total_cost: item[5],
+            order_date: item[6],
+            discount_percent: item[7],
+            delivery_cost: item[8],
+          }
+        );
+      });
+      console.log(newData)
+      console.log(data, 'data');
+      setOrders(newData);
+      
+    } else {
+      data = await fetchOrders({ customer_id: Cookies.get("DB_ID") });
+      const newData = data.map((item: any) => {
+        return (
+          {
+            id: item[0],
+            status: item[1],
+            customer_id: item[2],
+            receipt_date: item[3],
+            estimate_date: item[4],
+            total_cost: item[5],
+            order_date: item[6],
+            discount_percent: item[7],
+            delivery_cost: item[8],
+          }
+        );
+      });
+      console.log(newData)
+      console.log(data, 'data');
+      setOrders(newData);
+      
+    }
   };
   useEffect(() => {
     initOrders();

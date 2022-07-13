@@ -14,6 +14,7 @@ class AddProblem(Resource):
         order_id: int,
         store_id: int,
         problem_type: str = 'NOTHING'
+        discussion: str
     }"""
 
     def post(self):
@@ -26,13 +27,15 @@ class AddProblem(Resource):
             parser.add_argument('order_id', type=int, required=True)
             parser.add_argument('store_id', type=int, required=True)
             parser.add_argument('problem_type', type=str, required=True)
+            parser.add_argument('discussion', type=str, required=True)
 
             args = parser.parse_args()
 
             add_problem(
                 order_id=args['order_id'],
                 store_id=args['store_id'],
-                problem_type=args['problem_type']
+                problem_type=args['problem_type'],
+                discussion=args['discussion']
             )
 
             return jsonify(

@@ -1,14 +1,51 @@
 
+import Field from 'components/form/field';
+import TextAreaField from 'components/form/textarea-field';
 import { ProductCard } from 'pages/products/product';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, FlexboxGrid } from 'rsuite';
-import { fetchOrder } from './api/orders';
+import { Button, ButtonToolbar, FlexboxGrid, Form, Schema, SelectPicker, Timeline } from 'rsuite';
+import { showToast } from 'util/toast';
+import { addProblemApi, fetchOrder, fetchProblems } from './api/orders';
+
+const { StringType, NumberType } = Schema.Types;
+const model = Schema.Model({
+  problem_type: StringType().isRequired(),
+});
+
 export const Order = () => {
   const navigate = useNavigate();
   const { ID } = useParams();
 
   const [orderData, setOrderData] = useState<any>([]);
+  const [problems, setProblems] = useState<any>([]);
+
+
+  const formRef = useRef<any>();
+  const [formError, setFormError] = useState<any>();
+  const [formValue, setFormValue] = useState<any>();
+  
+
+  
+  const handleSubmit = useCallback(async () => {
+    if (formRef.current && !formRef.current.check()) {
+      console.log(formError, 'Form Error');
+      return;
+    }
+    
+    console.log(formValue, 'Form Value');
+
+    const res = await addProblemApi({...formValue, store_id:orderData[0].store_id, order_id:ID });
+    if (res==1) {
+      showToast("Note Added Successfully", "success");
+      const problemsData = await fetchProblems({ order_id: ID });
+      console.log(problemsData);
+      setProblems(problemsData);
+    } else if (res == -1) {
+      showToast("Error adding note", "error");
+    }
+  }, [formValue, orderData]);
+
 
   useEffect(() => {
     if (!ID) return;
@@ -53,6 +90,10 @@ export const Order = () => {
         
       }));
 
+      const problemsData = await fetchProblems({ order_id: ID });
+      console.log(problemsData);
+      setProblems(problemsData);
+
     })()
     }, []);
     return (
@@ -91,6 +132,46 @@ export const Order = () => {
           </>
           }
         </div>
+
+        {/* form  */}
+
+        <Form ref={formRef} onChange={setFormValue} onCheck={setFormError} formError={formError} model={model} formDefaultValue={formValue} style={{ margin: "auto"}}>
+              <div className="show-grid mb-4">
+                <FlexboxGrid>
+                  <FlexboxGrid.Item colspan={14} style={{ paddingRight: 10 }}>
+                
+                    <Field name="problem_type" label="Problem Type" accepter={SelectPicker} data={[
+                      { label: "Delay", value: "DELAY" },
+                      { label: "Damage", value: "DAMAGE" },
+                      { label: "Others", value: "OTHERS" },
+                    ]}
+                    />
+                    <TextAreaField rows={5} name="discussion" label="Note:" />
+                
+                    <ButtonToolbar style={{ marginTop:"20px", float: "right" }}>
+                      <Button  appearance="default" type="submit" onClick={handleSubmit}>Submit Note</Button>
+                    </ButtonToolbar>
+                  </FlexboxGrid.Item>
+                  {problems &&
+                    <FlexboxGrid.Item colspan={14} style={{ paddingRight: 10 }}>
+                      <Timeline align="left" className="font-20 mb-5">
+                    {problems.map((item: any, index: number) => {
+                      return (
+                        <Timeline.Item key={index}>
+                          <p className="mb-1">{item[2]}</p>
+                          <p className="mb-2">{item[4]}</p>
+                        </Timeline.Item>
+                      );
+                    })
+                  }
+                  </Timeline>
+                  </FlexboxGrid.Item>}
+                  
+                </FlexboxGrid>
+              </div>
+
+            
+            </Form>
       </div>
     );
 

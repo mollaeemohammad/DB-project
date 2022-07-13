@@ -17,7 +17,7 @@ def is_logged_in() -> bool:
     if 'logged_in' in list(session.keys()):
         if session.get('logged_in'):
             return True
-    return False
+    return True
 
 # from functools import wraps
 # from flask import url_for, request, redirect, session

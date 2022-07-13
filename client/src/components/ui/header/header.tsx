@@ -40,7 +40,7 @@ const Header = () => {
     </Nav>
     <Nav pullRight>
       <Nav.Item onClick={()=>navigate("/cart")} >Cart count: {user.cartCount}</Nav.Item>
-      <Nav.Item >{Cookies.get("DB_ROLE")}</Nav.Item>
+      <Nav.Item>{Cookies.get("DB_ROLE")} {Cookies.get("DB_USERNAME")}</Nav.Item>
       <Nav.Item onClick={handleLogout}>Logout</Nav.Item>
     </Nav>
   </Navbar>
@@ -48,7 +48,3 @@ const Header = () => {
 };
 
 export default Header;
-function idAdmin(): any {
-  throw new Error('Function not implemented.');
-}
-

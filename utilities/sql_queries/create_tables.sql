@@ -202,8 +202,9 @@ CREATE TABLE IF NOT EXISTS PROBLEM #####################
 ( -- ORDER & STORE
     order_id     INT                                 NOT NULL,
     store_id     INT                                 NOT NULL,
-    problem_type ENUM ('DELAY', 'DAMAGE', 'NOTHING') NOT NULL,
+    problem_type ENUM ('DELAY', 'DAMAGE','OTHERS', 'NOTHING') NOT NULL,
     ticket_date  DATE DEFAULT (CURRENT_DATE),
+    discussion TEXT DEFAULT "",
     FOREIGN KEY (order_id) REFERENCES `Order` (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
@@ -211,8 +212,11 @@ CREATE TABLE IF NOT EXISTS PROBLEM #####################
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+-- ALTER TABLE PROBLEM
+-- ADD COLUMN discussion TEXT DEFAULT ""
 
-
+-- ALTER TABLE `problem` CHANGE `problem_type` `problem_type`
+-- ENUM('DELAY','DAMAGE',  'OTHERS', 'NOTHING')
 
 CREATE TABLE IF NOT EXISTS Discount
 (
@@ -276,6 +280,7 @@ CREATE TABLE IF NOT EXISTS WANTED ###################
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
 
 
 
