@@ -10,6 +10,8 @@ import AddCategory from "pages/category/add-category/add-category";
 import { SingleProduct } from "pages/products/single-product/single-product";
 import Category from "pages/category/category";
 import Cart from "pages/cart/cart";
+import { Orders } from "pages/orders/orders";
+import { Order } from "pages/orders/order";
 
 
 interface Props {
@@ -46,6 +48,14 @@ export const routes = (isLoggedIn: boolean) => [
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/orders",
+        element: <Orders />,
+      },
+      {
+        path: "/order/:ID",
+        element: <Order />,
       },
     ]
   },

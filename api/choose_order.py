@@ -15,7 +15,7 @@ class ChooseOrder(Resource):
     {
     """
 
-    def get(self):
+    def post(self):
         """
             :return:
             [
@@ -41,7 +41,7 @@ class ChooseOrder(Resource):
             args = parser.parse_args()
 
             order_info = choose_order(args['order_id'])
-
+            print(order_info)
             if (date.today() - order_info[0][6]).days >= 3:
                 admin_status_update(args['order_id'], 'DELIVERED')
 

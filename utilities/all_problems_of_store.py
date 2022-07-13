@@ -4,6 +4,7 @@ from mysql.connector import Error
 
 def all_problems_of_store(store_id: int, also_nothing: bool = True) -> list:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         if also_nothing:
             cursor.execute(f'SELECT * FROM Problem \

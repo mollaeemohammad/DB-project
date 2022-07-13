@@ -63,6 +63,9 @@ const Sidebar:FC<Props> = ({expanded, setExpanded}) => {
               {categories.map((category: any, index: number) => <Dropdown.Item key={category[0]} eventKey={`4-5-${index}`} onClick={()=>{navigate(`category/${category[1]}`)}}>{category[1]}</Dropdown.Item>)}
             </Dropdown.Menu>
           </Dropdown>
+          {(!admin && !store) && <Nav.Item eventKey="4" onClick={() => navigate("/orders")}>
+            My Orders
+          </Nav.Item>}
         </Nav>
       </Sidenav.Body>
       <Sidenav.Toggle expanded={expanded} onToggle={expanded => setExpanded(expanded)} />

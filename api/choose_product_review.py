@@ -30,7 +30,8 @@ class ChooseProductReview(Resource):
             args = parser.parse_args()
             if not args.get('name') is None:
                 product_info = choose_a_product_name_review(args['name'])
-                product_info = handle_date_type(product_info)
+                print(product_info)
+                # product_info = handle_date_type(product_info)
                 return jsonify(product_info)
 
 

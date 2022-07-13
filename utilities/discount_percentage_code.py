@@ -7,6 +7,7 @@ def discount_percentage(code: str) -> float:
         if code is None:
             return 0.0
 
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
 
         cursor.execute(f'SELECT * \

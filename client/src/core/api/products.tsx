@@ -7,10 +7,15 @@ export const addProduct = (params:addProductModel ) => {
   return appNetworkManager.post(ADD_PRODUCT_URL, params);
 };
 
-const GET_PRODUCTS_URL = `/api/search_in_products`;
+const GET_PRODUCTS_URL =(search:string)=> `/api/search_in_products?name=${search}`;
 export const getProducts = (search:string) => {
-  console.log("getProducts: ", GET_PRODUCTS_URL);
-  return appNetworkManager.post(GET_PRODUCTS_URL, {name:search});
+  console.log("getProducts: ", GET_PRODUCTS_URL(search));
+  return appNetworkManager.get(GET_PRODUCTS_URL(search));
+};
+const GET_SUGGESTED_URL = `/api/suggestion`;
+export const getSuggested = (search:string) => {
+  console.log("getSuggested: ", GET_SUGGESTED_URL);
+  return appNetworkManager.post(GET_SUGGESTED_URL, search);
 };
 
 const GET_PRODUCT_URL = `/api/choose_product`;

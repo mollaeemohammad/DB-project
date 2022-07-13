@@ -4,6 +4,7 @@ from mysql.connector import Error
 
 def create_tables():
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'CREATE TABLE IF NOT EXISTS Customer \
                         ( \

@@ -4,6 +4,7 @@ from mysql.connector import Error
 
 def up_vote_review(review_id: int) -> None:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'UPDATE Reviews \
                         SET up_votes = up_votes + 1 \
@@ -15,6 +16,7 @@ def up_vote_review(review_id: int) -> None:
 
 def down_vote_review(review_id: int) -> None:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'UPDATE Reviews \
                         SET down_votes = down_votes + 1 \

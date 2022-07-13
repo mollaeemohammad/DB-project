@@ -4,6 +4,7 @@ from mysql.connector import Error
 
 def all_products_of_store(store_id: int) -> list:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT * \
                         FROM store AS s \

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, FlexboxGrid, Rate, Timeline } from "rsuite";
 import { useParams } from "react-router-dom";
-import { fetchProduct, addProductToCart, addReviewApi, fetchProductReview, voteApi } from "../api/products";
+import { fetchProduct, addProductToCart, addReviewApi, fetchProductReview, voteApi, fetchSuggested } from "../api/products";
 import { RatingStars } from "components/rating-stars";
 import { useUser } from 'contexts/user';
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ import { FC, forwardRef, useCallback,  useRef } from "react";
 import {  ButtonToolbar, Form, Input, MaskedInput, Modal, Schema, Placeholder } from "rsuite";
 import { showToast } from "util/toast";
 import Cookies from "js-cookie";
+import { ProductCard } from "../product";
 
 const { StringType, NumberType } = Schema.Types;
 const model = Schema.Model({
@@ -24,6 +25,7 @@ const model = Schema.Model({
 export const SingleProduct = () => {
   const { NAME } = useParams();
   const { Paragraph } = Placeholder;
+  const [products, setProducts] = useState<any>([]);
   const [productData, setProductData] = useState<any>([]);
   const [productReviewData, setProductReviewData] = useState<any>([]);
   const { userTrigger, setUserTrigger } = useUser();
@@ -80,6 +82,14 @@ export const SingleProduct = () => {
     initProductReview();
   };
 
+  const initSuggestedProducts = async (id:number)=>{
+    const data = await fetchSuggested({ product_id: id });
+    
+    setProducts(data.filter((item: any) => { 
+      return item[0] != id;
+    }));
+  }
+
   useEffect(() => {
     (async () => {
       if (!NAME) return;
@@ -119,7 +129,8 @@ export const SingleProduct = () => {
       setProductData(jsonedData);
 
 
-      initProductReview();
+    await initProductReview();
+    await initSuggestedProducts(data[0][0]);
 
 
 
@@ -137,7 +148,7 @@ export const SingleProduct = () => {
           </div>
           <div className="col-12 col-md-7">
             <h2>{productData[0].name}</h2>
-            <div className="mt-2"><Rate defaultValue={avgRate} readOnly allowHalf />{ productData[0].rating }</div>
+          {avgRate && <div className="mt-2"><Rate defaultValue={avgRate} readOnly allowHalf />{avgRate}</div>}
             <p className="mt-3 font-20" style={{minHeight:100}}>{productData[0].description}</p>
             <div className="font-20 mb-2">Available on:</div>
             <FlexboxGrid className=" mb-1 font-18 text-center d-flex" style={{alignItems:"center", justifyContent: "center"}}>
@@ -197,7 +208,22 @@ export const SingleProduct = () => {
 
             
             </Form>
-        </div>  
+        </div>
+          
+        <div className="row">
+          <div className="col-12 mt-3 mb-3">
+            <h3>Suggested Products:</h3>
+          </div>
+          <div className="col-12">
+            <div className="row product-list">
+              {products.map((product: any) => {
+                return (
+                  <ProductCard key={product[0]} data={product} />
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>}
     </div>
   );

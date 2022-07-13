@@ -6,6 +6,7 @@ from mysql.connector import Error
 
 def add_review(product_id: int, discussion: str, rate: float) -> int:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'INSERT INTO reviews (product_id, discussion, rate) \
                         VALUES ({product_id}, "{discussion}", {rate});')

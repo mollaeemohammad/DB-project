@@ -4,6 +4,7 @@ from mysql.connector import Error
 
 def all_addresses_of_customer(customer_id: int) -> list:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT a.address_id, a.customer_id, a.complete_address \
                         FROM Customer AS c \

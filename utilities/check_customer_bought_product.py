@@ -4,6 +4,7 @@ from mysql.connector import Error
 
 def check_customer_bought_product(customer_id: int, product_id: int) -> bool:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT * \
                         FROM customer AS c \

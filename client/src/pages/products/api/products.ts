@@ -1,4 +1,4 @@
-import { addReview, getProduct, getProductReview, getProducts, sendVote } from "core/api";
+import { addReview, getProduct, getProductReview, getProducts, getSuggested, sendVote } from "core/api";
 import Cookies from "js-cookie";
 import { getDataFromStorage, saveDataToStorage } from "util/storage";
 import { showToast } from "util/toast";
@@ -29,6 +29,17 @@ export const fetchProduct = async (query: any) => {
 export const fetchProductReview = async (query: any) => {
   try {
     const { status, data } = await getProductReview(query);
+    if (status === 200) {
+      return data;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  return [];
+};
+export const fetchSuggested = async (query: any) => {
+  try {
+    const { status, data } = await getSuggested(query);
     if (status === 200) {
       return data;
     }

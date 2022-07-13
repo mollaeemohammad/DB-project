@@ -4,7 +4,8 @@ from mysql.connector import Error
 
 def choose_a_product_id(product_id: int) -> list:
     try:
-        cursor = conn.cursor()
+        conn.reconnect()
+        cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT * \
                         FROM Product AS p \
                         INNER JOIN SUPPLIES AS s ON p.id = s.product_id \
@@ -20,6 +21,7 @@ def choose_a_product_id(product_id: int) -> list:
 
 def choose_a_product_name(product_name: str) -> list:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT * \
                         FROM Product AS p \
@@ -34,6 +36,7 @@ def choose_a_product_name(product_name: str) -> list:
 
 def choose_a_product_name_review(product_name: str) -> list:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT * \
                         FROM Product AS p \

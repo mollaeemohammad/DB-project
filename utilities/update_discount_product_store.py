@@ -11,6 +11,7 @@ def update_discount(store_id: int, product_id: int, discount_percentage: float) 
     :return:
     """
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'UPDATE supplies \
                         SET discount_percentage = {discount_percentage} \

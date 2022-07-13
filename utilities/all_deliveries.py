@@ -4,6 +4,7 @@ from mysql.connector import Error
 
 def all_deliveries(store_id: int) -> list:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         cursor.execute(f'SELECT d.id, d.name, d.cost\
                         FROM store \

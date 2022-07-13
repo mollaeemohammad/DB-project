@@ -5,6 +5,7 @@ from datetime import date
 
 def update_product_count(store_id: int, product_id: int, count: int, discount_percentage: float) -> int:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
         if discount_percentage is None:
             cursor.execute(f'UPDATE supplies \

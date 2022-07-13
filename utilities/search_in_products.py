@@ -4,8 +4,9 @@ from mysql.connector import Error
 
 def search_in_products(title: str) -> list:
     try:
+        conn.reconnect()
         cursor = conn.cursor(buffered=True)
-        cursor.execute(f'SELECT id, rating, price, `name`, `picture`, `description`, `color` \
+        cursor.execute(f'SELECT * \
                         FROM Product \
                         WHERE name LIKE "%{title}%"')
         return cursor.fetchall()
