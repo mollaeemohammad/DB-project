@@ -34,7 +34,7 @@ export const SingleProduct = () => {
   const [formError, setFormError] = useState<any>();
   const [formValue, setFormValue] = useState<any>({ rate: 2.5 });
   
-  const [avgRate, setAvgRate] = useState<any>();
+  const [avgRate, setAvgRate] = useState<any>(0.0);
   const handleSubmit = useCallback(async () => {
     if (formRef.current && !formRef.current.check()) {
       console.log(formError, 'Form Error');
@@ -62,7 +62,9 @@ export const SingleProduct = () => {
       return sum + parseFloat(item[12]);
     }, 0);
 
-    setAvgRate(total / data.length);
+    if (data.length) {
+      setAvgRate(total / data.length);
+    }
 
     const jsonedData = data.map((item: any, index: number) => {
       return ({
@@ -148,7 +150,7 @@ export const SingleProduct = () => {
           </div>
           <div className="col-12 col-md-7">
             <h2>{productData[0].name}</h2>
-          {avgRate && <div className="mt-2"><Rate defaultValue={avgRate} readOnly allowHalf />{avgRate}</div>}
+            <div className="mt-2"><Rate defaultValue={avgRate} readOnly allowHalf />{avgRate}</div>
             <p className="mt-3 font-20" style={{minHeight:100}}>{productData[0].description}</p>
             <div className="font-20 mb-2">Available on:</div>
             <FlexboxGrid className=" mb-1 font-18 text-center d-flex" style={{alignItems:"center", justifyContent: "center"}}>
@@ -168,7 +170,8 @@ export const SingleProduct = () => {
             
           </div>
           <div className="col-12 col-md-5">
-            <div>
+            <div className="pos-relative">
+              <div style={{borderRadius:100, width:20, height:20, backgroundColor:productData[0].color, position:"absolute", top:70, right:50}} ></div>
               <img src={productData[0].picture} alt="" />
             </div>
           </div>

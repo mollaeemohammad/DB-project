@@ -4,9 +4,9 @@ import { getDataFromStorage, saveDataToStorage } from "util/storage";
 import { showToast } from "util/toast";
 
 
-export const fetchProducts = async (search = "") => {
+export const fetchProducts = async (search:string, min_weight:number, max_weight:number, min_price:number, max_price:number, color:string) => {
   try {
-    const { status, data } = await getProducts(search);
+    const { status, data } = await getProducts(search, min_weight, max_weight, min_price, max_price, color);
     if (status === 200) {
       return data;
     }

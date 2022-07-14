@@ -28,8 +28,8 @@ const Sidebar:FC<Props> = ({expanded, setExpanded}) => {
 
   useEffect(() => {
     (async () => {
-      const data = await fetchCategories();
-      setCategories(data);
+      // const data = await fetchCategories();
+      // setCategories(data);
     })();
   }, []);
 

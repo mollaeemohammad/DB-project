@@ -7,10 +7,10 @@ export const addProduct = (params:addProductModel ) => {
   return appNetworkManager.post(ADD_PRODUCT_URL, params);
 };
 
-const GET_PRODUCTS_URL =(search:string)=> `/api/search_in_products?name=${search}`;
-export const getProducts = (search:string) => {
-  console.log("getProducts: ", GET_PRODUCTS_URL(search));
-  return appNetworkManager.get(GET_PRODUCTS_URL(search));
+const GET_PRODUCTS_URL =(search:string, min_weight:number, max_weight:number, min_price:number, max_price:number, color:string)=> `/api/filter_products?name=${search}&min_weight=${min_weight}&max_weight=${max_weight}&min_price=${min_price}&max_price=${max_price}&color=${color}`;
+export const getProducts = (search:string, min_weight:number, max_weight:number, min_price:number, max_price:number, color:string) => {
+  console.log("getProducts: ", GET_PRODUCTS_URL(search, min_weight, max_weight, min_price, max_price, color));
+  return appNetworkManager.get(GET_PRODUCTS_URL(search, min_weight, max_weight, min_price, max_price, color));
 };
 const GET_SUGGESTED_URL = `/api/suggestion`;
 export const getSuggested = (search:string) => {
