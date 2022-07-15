@@ -40,7 +40,7 @@ export const SingleProduct = () => {
     setUserTrigger(!userTrigger);
   };
 
-  const initProductReview = async () => {
+  const initProductReview = useCallback(async () => {
     const data = await fetchProductReview({ name: NAME });
 
     const total = data.reduce(function (sum:any, item:any) {
@@ -49,6 +49,7 @@ export const SingleProduct = () => {
 
     if (data.length) {
       setAvgRate(total / data.length);
+      console.log(total / data.length)
     }
 
     const jsonedData = data.map((item: any, index: number) => {
@@ -62,7 +63,7 @@ export const SingleProduct = () => {
       });
     });
     setProductReviewData(jsonedData);
-  };
+  },[avgRate]);
 
   const handleSubmit = useCallback(async () => {
     if (formRef.current && !formRef.current.check()) {
@@ -172,7 +173,8 @@ export const SingleProduct = () => {
           </div>
           <div className="col-12 col-md-7">
             <h2>{productData[0].name}</h2>
-            {avgRate ? <div className="mt-2"><Rate defaultValue={avgRate} readOnly allowHalf />{avgRate}</div>:<div className="mt-2"><Rate defaultValue={0} readOnly allowHalf />{0.0}</div>}
+            {avgRate ? (<div className="mt-2"><Rate defaultValue={avgRate} readOnly allowHalf /></div>):""}
+            {!avgRate && <div className="mt-2"><Rate defaultValue={0} readOnly allowHalf /></div>}
             <p className="mt-3 font-20" style={{minHeight:100}}>{productData[0].description}</p>
             <div className="font-20 mb-2">Available on:</div>
             <FlexboxGrid className=" mb-1 font-18 text-center d-flex" style={{alignItems:"center", justifyContent: "center"}}>
@@ -185,7 +187,7 @@ export const SingleProduct = () => {
               return (<FlexboxGrid key={`${item.id} ${item.store_id}`} className=" font-18 text-center d-flex" style={{alignItems:"center", justifyContent: "center"}}>
                 <FlexboxGrid.Item colspan={6}>{item.store_name}</FlexboxGrid.Item>
                 <FlexboxGrid.Item className="p-1" colspan={6}>{item.store_discount ? <s>{productData[0].price}</s> : productData[0].price} $</FlexboxGrid.Item>
-                <FlexboxGrid.Item className="p-1" colspan={6}>{productData[0].price * (1 - item.store_discount)} $</FlexboxGrid.Item>
+                <FlexboxGrid.Item className="p-1" colspan={6}>{Math.floor((productData[0].price * (1 - item.store_discount))*100)/100} $</FlexboxGrid.Item>
                 <FlexboxGrid.Item className="p-1" colspan={6}><Button onClick={() => { addProductToCart({ product_id: item.id, store_id: item.store_id, count: 1, discount_percentage: item.store_discount, price: item.price,name:item.name, store_name:item.store_name, picture:item.picture }, updateCart); }} appearance="default">Add to cart</Button></FlexboxGrid.Item>
               </FlexboxGrid>);
             })}

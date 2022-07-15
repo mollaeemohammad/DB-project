@@ -129,9 +129,9 @@ export const Order = () => {
               <FlexboxGrid key={`${item.id} ${item.store_id}`} className="mt-4 mb-1 font-18 text-center d-flex" style={{alignItems:"center", justifyContent: "center"}}>
               <FlexboxGrid.Item colspan={6}><ProductCard full={true} data={[item.id, "0.0", item.regular_price, item.name, item.picture, item.weight, item.color, item.dimensions, item.description]} /></FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={4}>{item.store_name}</FlexboxGrid.Item>
-              <FlexboxGrid.Item colspan={4}>{item.regular_price * (1- item.discount_percentage)}$</FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={4}>{Math.floor(item.regular_price * (1- item.discount_percentage)*100)/100}$</FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={4}>{item.count}</FlexboxGrid.Item>
-              <FlexboxGrid.Item colspan={4}>{item.count* (item.regular_price * (1- item.discount_percentage))}$</FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={4}>{item.count* Math.floor((item.regular_price * (1- item.discount_percentage)*100))/100}$</FlexboxGrid.Item>
               </FlexboxGrid>
               
             );

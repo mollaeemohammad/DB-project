@@ -10,7 +10,7 @@ export const OrderCard = ({ data }: any) => {
         <FlexboxGrid.Item colspan={4}>{data.status}</FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={4}>{data.order_date }</FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={4}>{data.estimate_date}</FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={4}>{data.total_cost}</FlexboxGrid.Item>
+        <FlexboxGrid.Item colspan={4}>{data.total_cost}$</FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={4}><Link to={`/order/${data.id}`}>View Order</Link></FlexboxGrid.Item>
       </FlexboxGrid>
     </div>

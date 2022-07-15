@@ -58,7 +58,7 @@ const Sidebar:FC<Props> = ({expanded, setExpanded}) => {
             eventKey="3"
             title="Categories"
           >
-            <Dropdown.Item eventKey="3-1" onClick={()=>navigate("/categories")} >Category List</Dropdown.Item>
+            <Dropdown.Item eventKey="3-1" onClick={()=>navigate("/category/shoes")} >Category List</Dropdown.Item>
             {(admin || store) && <Dropdown.Item eventKey="3-2" onClick={()=>navigate("/add-category")} >Add Category</Dropdown.Item>}
           </Dropdown>
           {!admin && <Nav.Item eventKey="4" onClick={() => navigate("/orders")}>

@@ -82,7 +82,7 @@ export const Cart = () => {
                   return (<FlexboxGrid key={`${item.product_id}${item.store_id}`} className=" mb-1 font-18 text-center d-flex" style={{ alignItems: "center", justifyContent: "center" }}>
                     <FlexboxGrid.Item colspan={4} onClick={() => { navigate(`/product/${item.name}`)}}><img src={item.picture} /></FlexboxGrid.Item>
                     <FlexboxGrid.Item colspan={4}>{item.name}</FlexboxGrid.Item>
-                    <FlexboxGrid.Item colspan={4}>{item.price*(1-item.discount_percentage)}$</FlexboxGrid.Item>
+                    <FlexboxGrid.Item colspan={4}>{Math.floor(item.price*(1-item.discount_percentage)*100)/100}$</FlexboxGrid.Item>
                     <FlexboxGrid.Item colspan={4}>{item.count}</FlexboxGrid.Item>
                     <FlexboxGrid.Item colspan={4}>{item.store_name}</FlexboxGrid.Item>
                     <FlexboxGrid.Item colspan={4}><Button appearance="default" onClick={() => { removeFromCart(item.product_id, item.store_id, updateCart);}}>Remove From Cart</Button></FlexboxGrid.Item>

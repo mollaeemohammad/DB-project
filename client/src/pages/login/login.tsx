@@ -32,7 +32,7 @@ const Login = ({Role}:Props) => {
         Cookies.set("DB_ROLE", Role);
         Cookies.set("DB_USERNAME", data.username);
         Cookies.set("DB_ID", data.id);
-        navigate("/");
+        navigate("/products");
       }
     } catch (e) {
       console.log(e);
@@ -60,7 +60,7 @@ const Login = ({Role}:Props) => {
             <Form model={userLoginFormModel} ref={userLoginFormRef} onChange={setUserLoginFormValue} onCheck={setUserLoginFormError} formError={userLoginFormError} onSubmit={handleUserLoginSubmit} style={{ margin: "auto", width: "100%", maxWidth: "400px" }}>
               {(Role == "admin" || Role=="store")&&<TextField type="text" name="name" label="Name" placeholder="name" />}
               {Role == "customer" && <TextField type="text" name="username" label="Username" placeholder="username" />}
-              <TextField type="text" name="password" label="Password" placeholder="password" />
+              <TextField type="password" name="password" label="Password" placeholder="password" />
               <ButtonToolbar>
               <Button style={{ width: "50%", margin: "auto", marginTop: "40px", display: "block" }} appearance="default" type="submit" loading={loadingLoginButton} disabled={loadingLoginButton} >Login</Button>
               </ButtonToolbar>
