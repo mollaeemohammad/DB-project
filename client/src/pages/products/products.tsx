@@ -19,9 +19,9 @@ const Products = () => {
   const [loadingProducts, setLoadingProducts] = useState(true);
   
   const [theSearch, setTheSearch] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
+  const [minPrice, setMinPrice] = useState<number>(0);
   const [maxPrice, setMaxPrice] = useState(999999);
-  const [minWeight, setMinWeight] = useState(0);
+  const [minWeight, setMinWeight] = useState<number>(0);
   const [maxWeight, setMaxWeight] = useState(999999);
   const [theColor, setTheColor] = useState("");
 
@@ -69,13 +69,13 @@ const Products = () => {
               <InputNumber
                 min={0}
                 max={99999}
-                onChange={(val: any) => { setMinPrice(val) }}
+                onChange={(val: any) => { setMinPrice(val?val:0) }}
               />
               <InputGroup.Addon>to</InputGroup.Addon>
               <InputNumber
                 min={0}
                 max={99999}
-                onChange={(val: any) => { setMaxPrice(val) }}
+                onChange={(val: any) => { setMaxPrice(val?val:99999) }}
               />
             </InputGroup>
           </div>
@@ -85,13 +85,13 @@ const Products = () => {
               <InputNumber
                 min={0}
                 max={99999}
-                onChange={(val: any) => { setMinWeight(val) }}
+                onChange={(val: any) => { setMinWeight(val?val:0) }}
               />
               <InputGroup.Addon>to</InputGroup.Addon>
               <InputNumber
                 min={0}
                 max={99999}
-                onChange={(val: any) => { setMaxWeight(val) }}
+                onChange={(val: any) => { setMaxWeight(val?val:99999) }}
               />
             </InputGroup>
             <label className="mb-1 mt-3">Color:</label>
