@@ -5,8 +5,9 @@ import { ProductCard } from 'pages/products/product';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, ButtonToolbar, FlexboxGrid, Form, Schema, SelectPicker, Timeline } from 'rsuite';
+import { isAdmin, isStore } from 'util/helper';
 import { showToast } from 'util/toast';
-import { addProblemApi, fetchOrder, fetchProblems } from './api/orders';
+import { addProblemApi, fetchOrder, fetchProblems, updateStatusApi } from './api/orders';
 
 const { StringType, NumberType } = Schema.Types;
 const model = Schema.Model({
@@ -24,6 +25,8 @@ export const Order = () => {
   const formRef = useRef<any>();
   const [formError, setFormError] = useState<any>();
   const [formValue, setFormValue] = useState<any>();
+  const [store, setStore] = useState(isStore());
+  const [admin, setAdmin] = useState(isAdmin());
   
 
   
@@ -46,7 +49,17 @@ export const Order = () => {
     }
   }, [formValue, orderData]);
 
-
+  const [trigger, setTrigger] = useState(true);
+  const handleStatus = useCallback(async (status: string) => {
+    const res = await updateStatusApi({ status: status, order_id: ID });
+    if (res == 1) {
+      showToast("status updated", "success");
+      setTrigger(!trigger);
+    } else {
+      showToast("error updating status", "error");
+      
+    }
+  },[trigger]);
   useEffect(() => {
     if (!ID) return;
     (async () => {
@@ -95,7 +108,9 @@ export const Order = () => {
       setProblems(problemsData);
 
     })()
-    }, []);
+  }, [trigger]);
+  
+
     return (
       <div className="col-12" >
         <div className="page-title-box">
@@ -128,7 +143,10 @@ export const Order = () => {
           <>
             <h4 className="page-title">Total: {orderData[0]?.total_price}$</h4>
             <h4 className="page-title">Order Date: {orderData[0]?.order_date}</h4>
-            <h4 className="page-title">Estimate Date: {orderData[0]?.estimate_date}</h4>
+            <h4 className="page-title mb-2">Estimate Date: {orderData[0]?.estimate_date}</h4>
+            {(!admin && !store && orderData[0]?.order_status!="DELIVERED") && <Button appearance="default" style={{marginRight:6}} onClick={() => { handleStatus("DELIVERED"); }}>Received?</Button>}
+            {(!admin && !store && orderData[0]?.order_status!="CANCELED") && <Button appearance="default" onClick={() => { handleStatus("CANCELED"); }}>Cancel?</Button>}
+            {(admin || store) && <div>Set status to: {orderData[0]?.order_status != "DELIVERED" && <Button appearance="default" style={{ marginRight: 6 }} onClick={() => { handleStatus("DELIVERED"); }}>Delivered</Button>} {orderData[0]?.order_status != "PREPARING" && <Button style={{ marginRight: 6 }} appearance="default" onClick={() => { handleStatus("PREPARING"); }}>Preparing</Button>}  {orderData[0]?.order_status!="CANCELED" && <Button appearance="default" onClick={() => { handleStatus("CANCELED"); }}>Cancel</Button>} </div>}
           </>
           }
         </div>

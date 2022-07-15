@@ -35,21 +35,6 @@ export const SingleProduct = () => {
   const [formValue, setFormValue] = useState<any>({ rate: 2.5 });
   
   const [avgRate, setAvgRate] = useState<any>(0.0);
-  const handleSubmit = useCallback(async () => {
-    if (formRef.current && !formRef.current.check()) {
-      console.log(formError, 'Form Error');
-      return;
-    }
-    
-    console.log(formValue, 'Form Value');
-
-    const res = await addReviewApi({...formValue, product_id:productData[0].id, customer_id:Cookies.get("DB_ID") });
-    if (res==1) {
-      showToast("Review Added Successfully", "success");
-    } else if (res == -2) {
-      showToast("You haven't bought this product yet.", "error");
-    }
-  }, [formValue, productData]);
   
   const updateCart = () => {
     setUserTrigger(!userTrigger);
@@ -79,8 +64,40 @@ export const SingleProduct = () => {
     setProductReviewData(jsonedData);
   };
 
+  const handleSubmit = useCallback(async () => {
+    if (formRef.current && !formRef.current.check()) {
+      console.log(formError, 'Form Error');
+      return;
+    }
+    
+    console.log(formValue, 'Form Value');
+
+    const res = await addReviewApi({...formValue, product_id:productData[0].id, customer_id:Cookies.get("DB_ID") });
+    if (res==1) {
+      await initProductReview();
+      showToast("Review Added Successfully", "success");
+    } else if (res == -2) {
+      showToast("You haven't bought this product yet.", "error");
+    }
+  }, [formValue, productData]);
+  
+  
   const vote = async (up: any, id: any) => {
-    await voteApi(up ? "up" : "down", { review_id: id });
+    const vote = Cookies.get("VOTE_"+id);
+    if (!vote) {
+      await voteApi(up ? "up" : "down", { review_id: id });
+      Cookies.set("VOTE_"+id, up ? "up" : "down");
+      console.log(up, id)
+    }
+    // else if (!up && vote == "up") {
+    //   await voteApi(up ? "up" : "down", { review_id: id });
+    //   Cookies.set("VOTE_"+id, "down");
+    //   console.log(up, id)
+    // } else if (up && vote != "up") {
+    //   await voteApi(up ? "up" : "down", { review_id: id });
+    //   Cookies.set("VOTE_"+id, "up");
+    //   console.log(up, id);
+    // }
     initProductReview();
   };
 
@@ -131,8 +148,13 @@ export const SingleProduct = () => {
       setProductData(jsonedData);
 
 
-    await initProductReview();
-    await initSuggestedProducts(data[0][0]);
+      await initProductReview();
+      try {
+        
+        await initSuggestedProducts(data[0][0]);
+      } catch (e) {
+        console.log(e)
+      }
 
 
 
@@ -150,7 +172,7 @@ export const SingleProduct = () => {
           </div>
           <div className="col-12 col-md-7">
             <h2>{productData[0].name}</h2>
-            <div className="mt-2"><Rate defaultValue={avgRate} readOnly allowHalf />{avgRate}</div>
+            {avgRate ? <div className="mt-2"><Rate defaultValue={avgRate} readOnly allowHalf />{avgRate}</div>:<div className="mt-2"><Rate defaultValue={0} readOnly allowHalf />{0.0}</div>}
             <p className="mt-3 font-20" style={{minHeight:100}}>{productData[0].description}</p>
             <div className="font-20 mb-2">Available on:</div>
             <FlexboxGrid className=" mb-1 font-18 text-center d-flex" style={{alignItems:"center", justifyContent: "center"}}>
@@ -219,7 +241,7 @@ export const SingleProduct = () => {
           </div>
           <div className="col-12">
             <div className="row product-list">
-              {products.map((product: any) => {
+              {products.slice(0,4).map((product: any) => {
                 return (
                   <ProductCard key={product[0]} data={product} />
                 );

@@ -6,13 +6,18 @@ import { Loader } from "rsuite";
 import debounce from "lodash.debounce";
 import { fetchCategory } from "./api/categories";
 import { ProductCard } from "pages/products/product";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
+import { ButtonGroup, Input, InputGroup, ButtonToolbar, Button } from "rsuite";
+import { fetchCategories } from "./api/categories";
 
 const Products = () => {
   const { NAME } = useParams();
 
   const [products, setProducts] = useState<any>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   const initProducts = async (name:string) => {
     setLoadingProducts(true);
@@ -24,7 +29,11 @@ const Products = () => {
   useEffect (() => {
     (async () => {
       if (!NAME) return;
-      initProducts(NAME);
+
+      const data = await fetchCategories();
+      setCategories(data);
+
+      await initProducts(NAME);
     })();
   },[NAME]);
 
@@ -37,6 +46,13 @@ const Products = () => {
               <h4 className="page-title">Products of category { NAME }</h4>
             </div>
           </div>
+          <ButtonToolbar className="mt-3 mb-3">
+            <ButtonGroup>
+            {categories.map((item: any) => {
+              return (<Button key={item[0]} onClick={()=>{navigate(`/category/${item[1]}`)}} appearance="default">{item[1]}</Button>);
+            })}
+            </ButtonGroup>
+          </ButtonToolbar>
 
           {!loadingProducts && <div className="col-12">
             <div className="row product-list">

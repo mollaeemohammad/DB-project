@@ -12,6 +12,7 @@ import Category from "pages/category/category";
 import Cart from "pages/cart/cart";
 import { Orders } from "pages/orders/orders";
 import { Order } from "pages/orders/order";
+import { Categories } from "pages/category";
 
 
 interface Props {
@@ -40,6 +41,10 @@ export const routes = (isLoggedIn: boolean) => [
       {
         path: "/add-category",
         element: <AddCategory />,
+      },
+      {
+        path: "/categories",
+        element: <Categories />,
       },
       {
         path: "/product/:NAME",

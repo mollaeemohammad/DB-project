@@ -25,3 +25,8 @@ export const addProblem = (query:string) => {
   console.log("addProblem: ", ADD_PROBLEM_URL);
   return appNetworkManager.post(ADD_PROBLEM_URL, query);
 };
+const UPDATE_STATUS_URL = `/api/update_status_order_customer`;
+export const updateStatus = (query:string) => {
+  console.log("updateStatus: ", UPDATE_STATUS_URL);
+  return appNetworkManager.post(UPDATE_STATUS_URL, query);
+};

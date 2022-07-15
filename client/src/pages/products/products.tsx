@@ -41,7 +41,7 @@ const Products = () => {
   useEffect (() => {
     (async () => {
       // filter_products?name=&min_weight=0&max_weight=999&min_price=13&max_price=100000&color=
-      initProducts();
+      // initProducts();
     })();
   },[]);
 
@@ -95,7 +95,8 @@ const Products = () => {
               />
             </InputGroup>
             <label className="mb-1 mt-3">Color:</label>
-            <SelectPicker block data={COLORS} renderMenuItem={(label:any, item:any) => {
+                
+            <SelectPicker block data={[{label:"All", value:""} , ...COLORS]} onChange={(val: any) => { setTheColor(val) }} renderMenuItem={(label:any, item:any) => {
               return (
                 <div>
                   <div className="d-flex" style={{alignItems:"center"}}><span style={{width:15, height:15, borderRadius:100, background:`${label}`, display:"inline-block", marginRight:10}} /> {label}</div>
